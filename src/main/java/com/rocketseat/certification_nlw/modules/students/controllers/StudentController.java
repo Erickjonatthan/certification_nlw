@@ -29,10 +29,10 @@ public class StudentController {
         var result = this.verifyIfHasCertificationUseCase.execute(verifyHasCertificationDTO);
         
         if(result) {
-           return "O usuário pode fazer a prova de certificação";
+           return "O usuário não pode fazer a prova de certificação, pois já recebeu sua certificação";
         }
         
-        return "O usuário não pode fazer a prova de certificação";
+        return "O usuário pode fazer a prova de certificação, pois ainda não respondeu nenhuma questão";
     
     }
 
