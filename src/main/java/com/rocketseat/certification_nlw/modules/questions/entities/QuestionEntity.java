@@ -30,7 +30,7 @@ public class QuestionEntity {
     private String technology;
 
     private String description;
-
+    
     @OneToMany
     @JoinColumn(name = "question_id")
     private List<AlternativesEntity> alternatives;

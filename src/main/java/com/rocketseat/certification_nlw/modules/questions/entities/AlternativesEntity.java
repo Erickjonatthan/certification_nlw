@@ -25,9 +25,7 @@ public class AlternativesEntity {
     private UUID id;
 
     private String description;
-
     private boolean isCorrect;
-
     @CreationTimestamp
     private LocalDateTime createdAt;
 

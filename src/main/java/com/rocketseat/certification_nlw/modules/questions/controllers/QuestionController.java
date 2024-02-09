@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import com.rocketseat.certification_nlw.modules.questions.record.AlternativeDetailsData;
 import com.rocketseat.certification_nlw.modules.questions.record.QuestionDetailsData;
 import com.rocketseat.certification_nlw.modules.questions.repositories.QuestionRepository;
 
@@ -24,9 +24,12 @@ public class QuestionController {
     @GetMapping("/technology/{technology}")
     public ResponseEntity getQuestionsByTechnology(@PathVariable String technology) {
         
-        var result = this.questionRepository.findByTechnology(technology);
-        List<QuestionDetailsData> questionDetails = result.stream()
-        .map(entity -> new QuestionDetailsData(entity.getId(), entity.getDescription(), entity.getTechnology()))
+        var question = this.questionRepository.findByTechnology(technology);
+    
+        List<AlternativeDetailsData> alternativesData = question.stream().map(entity -> entity.getAlternatives().stream().map(AlternativeDetailsData::new).collect(Collectors.toList())).flatMap(List::stream).collect(Collectors.toList());
+
+        List<QuestionDetailsData> questionDetails = question.stream()
+        .map(entity -> new QuestionDetailsData(entity.getId(), entity.getDescription(), entity.getTechnology(),alternativesData))
         .collect(Collectors.toList());
     
         return ResponseEntity.ok(questionDetails);
